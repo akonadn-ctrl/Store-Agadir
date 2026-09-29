@@ -1,59 +1,144 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GI Watches - أكادير</title>
+
+<title>GI Watches - ساعات أكادير</title>
 
 <style>
+*{
+  box-sizing:border-box;
+}
+
 body{
-    font-family: Arial;
-    background:#f5f5f5;
-    margin:0;
-    text-align:center;
+  margin:0;
+  font-family:Arial,Tahoma,sans-serif;
+  background:#f5f5f5;
+  color:#222;
 }
 
 header{
-    background:black;
-    color:white;
-    padding:20px;
+  background:#111;
+  color:white;
+  text-align:center;
+  padding:25px 15px;
+}
+
+header h1{
+  margin:0;
+  font-size:32px;
+}
+
+header p{
+  margin:10px 0 0;
+  color:#ddd;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
 }
 
 .products{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:20px;
-    padding:20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:18px;
 }
 
 .product{
-    background:white;
-    width:250px;
-    border-radius:10px;
-    padding:15px;
-    box-shadow:0 0 10px rgba(0,0,0,0.2);
+  background:white;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 3px 12px rgba(0,0,0,.12);
 }
 
 .product img{
-    width:100%;
-    border-radius:10px;
+  width:100%;
+  height:240px;
+  object-fit:cover;
+  display:block;
+}
+
+.product-info{
+  padding:15px;
+}
+
+.product h3{
+  margin:5px 0 10px;
+}
+
+.price{
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:12px;
 }
 
 button{
-    background:#ff6600;
-    color:white;
-    border:none;
-    padding:10px;
-    border-radius:5px;
-    cursor:pointer;
+  border:0;
+  border-radius:8px;
+  padding:12px 16px;
+  cursor:pointer;
+  font-size:16px;
 }
 
-#cart{
-    background:white;
-    margin:20px;
-    padding:20px;
-    border-radius:10px;
+.add{
+  width:100%;
+  background:#111;
+  color:white;
+}
+
+.cart{
+  background:white;
+  margin-top:30px;
+  padding:20px;
+  border-radius:14px;
+  box-shadow:0 3px 12px rgba(0,0,0,.12);
+}
+
+.cart-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid #ddd;
+  padding:12px 0;
+}
+
+.quantity button{
+  padding:5px 10px;
+  margin:0 3px;
+}
+
+.total{
+  font-size:22px;
+  font-weight:bold;
+  margin-top:20px;
+}
+
+form{
+  margin-top:20px;
+}
+
+input,textarea{
+  width:100%;
+  padding:13px;
+  margin:7px 0;
+  border:1px solid #ccc;
+  border-radius:8px;
+  font-size:16px;
+}
+
+.order{
+  width:100%;
+  background:#16a34a;
+  color:white;
+  margin-top:10px;
+}
+
+.empty{
+  color:#777;
+  text-align:center;
 }
 </style>
 </head>
@@ -61,61 +146,110 @@ button{
 <body>
 
 <header>
-    <h1>GI Watches</h1>
-    <p>ساعات في أكادير من 100 إلى 200 درهم</p>
+  <h1>GI WATCHES ⌚</h1>
+  <p>ساعات أنيقة في أكادير</p>
+  <p>الأسعار من 100 إلى 200 درهم</p>
 </header>
 
-<div class="products">
+<div class="container">
 
-<div class="product">
-<img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49">
-<h3>ساعة كلاسيكية</h3>
-<p>100 درهم</p>
-<button onclick="addToCart('ساعة كلاسيكية')">أضف للسلة</button>
+<h2>🛍️ الساعات</h2>
+
+<div class="products" id="products"></div>
+
+<div class="cart">
+
+<h2>🛒 سلة المشتريات</h2>
+
+<div id="cartItems">
+  <p class="empty">السلة فارغة</p>
 </div>
 
-<div class="product">
-<img src="https://images.unsplash.com/photo-1547996160-81dfa63595aa">
-<h3>ساعة رياضية</h3>
-<p>150 درهم</p>
-<button onclick="addToCart('ساعة رياضية')">أضف للسلة</button>
+<div class="total">
+  المجموع: <span id="total">0</span> درهم
 </div>
 
-<div class="product">
-<img src="https://images.unsplash.com/photo-1434056886845-dac89ffe9b56">
-<h3>ساعة فاخرة</h3>
-<p>200 درهم</p>
-<button onclick="addToCart('ساعة فاخرة')">أضف للسلة</button>
-</div>
+<h2>📦 معلومات الطلب</h2>
+
+<form id="orderForm">
+
+<input
+  id="name"
+  type="text"
+  placeholder="الاسم الكامل"
+  required
+>
+
+<input
+  id="phone"
+  type="tel"
+  placeholder="رقم الهاتف"
+  required
+>
+
+<input
+  id="address"
+  type="text"
+  placeholder="العنوان في أكادير"
+  required
+>
+
+<textarea
+  id="note"
+  placeholder="ملاحظة إضافية (اختياري)"
+></textarea>
+
+<button class="order" type="submit">
+  تأكيد الطلب
+</button>
+
+</form>
 
 </div>
 
-<div id="cart">
-<h2>السلة</h2>
-<ul id="cartItems"></ul>
-
-<h3>معلومات الزبون</h3>
-<input type="text" placeholder="الاسم"><br><br>
-<input type="text" placeholder="رقم الهاتف"><br><br>
-<input type="text" placeholder="العنوان"><br><br>
-
-<button>إرسال الطلب</button>
 </div>
 
 <script>
-let cart=[];
 
-function addToCart(product){
-    cart.push(product);
+const products = [
 
-    let list=document.getElementById("cartItems");
-    list.innerHTML="";
+{
+ name:"ساعة GI 1",
+ price:100,
+ image:"IMG_20260929_120958.png"
+},
 
-    cart.forEach(item=>{
-        list.innerHTML += "<li>"+item+"</li>";
-    });
-}
-</script>
+{
+ name:"ساعة GI 2",
+ price:110,
+ image:"IMG_20260929_120942.png"
+},
 
-</body>
-      </html>
+{
+ name:"ساعة GI 3",
+ price:120,
+ image:"IMG_20260929_120811.png"
+},
+
+{
+ name:"ساعة GI 4",
+ price:130,
+ image:"IMG_20260929_120925.png"
+},
+
+{
+ name:"ساعة GI 5",
+ price:140,
+ image:"IMG_20260929_120903.png"
+},
+
+{
+ name:"ساعة GI 6",
+ price:150,
+ image:"IMG_20260929_120848.png"
+},
+
+{
+ name:"ساعة GI 7",
+ price:150,
+ image:"IMG_20260929
