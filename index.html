@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GI Watches - أكادير</title>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f5f5f5;
+    margin:0;
+    text-align:center;
+}
+
+header{
+    background:black;
+    color:white;
+    padding:20px;
+}
+
+.products{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:20px;
+    padding:20px;
+}
+
+.product{
+    background:white;
+    width:250px;
+    border-radius:10px;
+    padding:15px;
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+.product img{
+    width:100%;
+    border-radius:10px;
+}
+
+button{
+    background:#ff6600;
+    color:white;
+    border:none;
+    padding:10px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+#cart{
+    background:white;
+    margin:20px;
+    padding:20px;
+    border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>GI Watches</h1>
+    <p>ساعات في أكادير من 100 إلى 200 درهم</p>
+</header>
+
+<div class="products">
+
+<div class="product">
+<img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49">
+<h3>ساعة كلاسيكية</h3>
+<p>100 درهم</p>
+<button onclick="addToCart('ساعة كلاسيكية')">أضف للسلة</button>
+</div>
+
+<div class="product">
+<img src="https://images.unsplash.com/photo-1547996160-81dfa63595aa">
+<h3>ساعة رياضية</h3>
+<p>150 درهم</p>
+<button onclick="addToCart('ساعة رياضية')">أضف للسلة</button>
+</div>
+
+<div class="product">
+<img src="https://images.unsplash.com/photo-1434056886845-dac89ffe9b56">
+<h3>ساعة فاخرة</h3>
+<p>200 درهم</p>
+<button onclick="addToCart('ساعة فاخرة')">أضف للسلة</button>
+</div>
+
+</div>
+
+<div id="cart">
+<h2>السلة</h2>
+<ul id="cartItems"></ul>
+
+<h3>معلومات الزبون</h3>
+<input type="text" placeholder="الاسم"><br><br>
+<input type="text" placeholder="رقم الهاتف"><br><br>
+<input type="text" placeholder="العنوان"><br><br>
+
+<button>إرسال الطلب</button>
+</div>
+
+<script>
+let cart=[];
+
+function addToCart(product){
+    cart.push(product);
+
+    let list=document.getElementById("cartItems");
+    list.innerHTML="";
+
+    cart.forEach(item=>{
+        list.innerHTML += "<li>"+item+"</li>";
+    });
+}
+</script>
+
+</body>
+      </html>
